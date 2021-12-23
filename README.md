@@ -45,7 +45,7 @@ Example:
 Now, you can run experiments for the different modalities (here image) as follows:
 
 ```
-python scripts/run_image.py config/image/pretrain_expert_cifar10_simclr.json
+python scripts/run_image.py config/image/pretrain_viewmaker_cifar10_simclr.json --gpu-device 0
 ```
 (If you see an error about wandb directory not created, create a directory `mkdir wandb` at the base path ad re-run the code)
 
