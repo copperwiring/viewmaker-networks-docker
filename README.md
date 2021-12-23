@@ -26,11 +26,28 @@ Start by running
 source init_env.sh
 ```
 
-Now, you can run experiments for the different modalities as follows:
+Note: Our experiements will logged in wandb. Hence, before runnig the experiments;
 
-```console
-scripts/run_sensor.py config/sensor/pretrain_viewmaker_pamap2_simclr.json --gpu-device 0
+1. Create a wandb account
+2. Create a username when prompted.
+3. Update run_image.py at line 67 with your wandb-username
+
 ```
+    wandb.init(project='image', entity='<wandb-username>', name=config.exp_name, config=config, sync_tensorboard=True)
+```
+Example:
+
+```
+    wandb.init(project='image', entity='sulphur', name=config.exp_name, config=config, sync_tensorboard=True)
+```
+4. Save the file run_image.py
+
+Now, you can run experiments for the different modalities (here image) as follows:
+
+```
+python scripts/run_image.py config/image/pretrain_expert_cifar10_simclr.json
+```
+(If you see an error about wandb directory not created, create a directory `mkdir wandb` at the base path ad re-run the code)
 
 
 The `scripts` directory holds:
