@@ -17,8 +17,12 @@ def ckpt_name(epoch):
     return checkpoint_name
 
 
-def get_encoder_system(model_path, device, epoch_num):
-    config_file = '../experiments/experiments/pretrain_viewmaker_cifar_simclr_resnet18/config.json'
+def get_encoder_system(mode, model_path, device, epoch_num):
+    if mode == 'viewmaker':
+        config_file = '../experiments/experiments/pretrain_viewmaker_cifar_simclr_resnet18/config.json'
+    elif mode == 'expert':
+        config_file = '../experiments/experiments/pretrain_expert_cifar_simclr_resnet18/config.json'
+    
     config_json = load_json(config_file)
 
     config = DotMap(config_json)
@@ -39,5 +43,5 @@ def return_system_encoder(mode, epoch_num):
     checkpoint_name = ckpt_name(epoch_num)
     model_path = os.path.join(ckpt_path,checkpoint_name)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    system, _ = get_encoder_system(model_path, device, epoch_num)
+    system, _ = get_encoder_system(mode, model_path, device, epoch_num)
     return system.encoder
