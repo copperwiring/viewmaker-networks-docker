@@ -68,6 +68,7 @@ def get_system(model_path, device):
     system = TransferExpertSystem(config)
     checkpoint = torch.load(model_path, map_location=device)
     system.load_state_dict(checkpoint['state_dict'], strict=False)
+    import pdb; pdb.set_trace()
     return system
 
 def predict(encoder, model, images):

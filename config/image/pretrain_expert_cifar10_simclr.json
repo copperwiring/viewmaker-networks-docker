@@ -27,7 +27,7 @@
         "learning_rate": 0.03,
         "momentum": 0.9,
         "weight_decay": 1e-4,
-        "validate_freq": 1,
+        "validate_freq": 3,
         "patience": 1000,
         "num_view_update": 1
     },

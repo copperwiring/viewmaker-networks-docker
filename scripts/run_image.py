@@ -58,11 +58,14 @@ def run(args, gpu_device=None):
     else:
         callbacks = []
 
+
     # TODO: adjust period for saving checkpoints.
     ckpt_callback = pl.callbacks.ModelCheckpoint(
         os.path.join(config.exp_dir, 'checkpoints'),
         save_top_k=-1,
-        period=1,
+        period=2,
+        save_last = True
+        # every_n_epochs = 5
     )
     wandb.init(project='image', entity='sulphur', name=config.exp_name, config=config, sync_tensorboard=True)
     trainer = pl.Trainer(

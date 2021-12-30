@@ -51,6 +51,9 @@ def _process_config(config_json, override_dotmap=None, exp_name_suffix=None):
     print()
 
     exp_base = config.exp_base or DEFAULT_EXP_BASE
+
+    # import pdb; pdb.set_trace()
+
         
     # Uncomment me if you wish to not overwrite
     # timestamp = strftime('%Y-%m-%d--%H_%M_%S', localtime())
