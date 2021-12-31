@@ -7,7 +7,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 batch_size = 64
 
 transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize([0.491, 0.482, 0.446], [0.247, 0.243, 0.261])])
-test_set = datasets.CIFAR10(root='../data/cifar10/', train=False,
+test_set = datasets.CIFAR10(root='scripts/data/cifar10/', train=False,
                                        download=False, transform=transform)
 test_loader = torch.utils.data.DataLoader(test_set, batch_size=batch_size,
                                          shuffle=False, num_workers=2)
