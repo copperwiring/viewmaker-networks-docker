@@ -7,7 +7,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 batch_size = 64
 
 transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize([0.491, 0.482, 0.446], [0.247, 0.243, 0.261])])
-test_set = datasets.CIFAR10(root='../data/cifar10/', train=False,
+test_set = datasets.CIFAR10(root='scripts/data/cifar10/', train=False,
                                        download=False, transform=transform)
 test_loader = torch.utils.data.DataLoader(test_set, batch_size=batch_size,
                                          shuffle=False, num_workers=2)
@@ -39,6 +39,10 @@ output_embed_matrix_expt = compute_embed_matrix(enc_expert_resnet)
 output_embed_matrix_vwmkr = compute_embed_matrix(enc_viewmaker_resnet)
 
 
+############################################################################
+#               Rank & Singular Values of Embedding Matrices
+############################################################################
+
 print('Shape of output_embed_matrix = ',output_embed_matrix_expt.shape)
 print('Shape of output_embed_matrix = ',output_embed_matrix_vwmkr.shape)
 
@@ -54,5 +58,36 @@ _,s_viewmaker,_ = torch.svd(output_embed_matrix_vwmkr, some=False)
 
 plt.plot(torch.log(s_expert.cpu()), "r-")
 plt.plot(torch.log(s_viewmaker.cpu()), "b-")
+plt.savefig('log.png')
+plt.show()
+
+############################################################################
+# Rank & Singular Values of Cross-Correlation Matrices of Embedding Matrices
+############################################################################
+
+N_expt = output_embed_matrix_expt.size(0)
+Z_expt = (output_embed_matrix_expt - torch.mean(output_embed_matrix_expt,0)).t()
+correlation_matrix_expt = (1/N_expt) * (Z_expt @ Z_expt.t())
+
+N_vwmkr = output_embed_matrix_vwmkr.size(0)
+Z_vwmkr = (output_embed_matrix_vwmkr - torch.mean(output_embed_matrix_vwmkr,0)).t()
+correlation_matrix_vwmkr = (1/N_vwmkr) * (Z_vwmkr @ Z_vwmkr.t())
+
+
+print('Shape of correlation_matrix = ',correlation_matrix_expt.shape)
+print('Shape of correlation_matrix = ',correlation_matrix_vwmkr.shape)
+
+Rank = torch.matrix_rank(correlation_matrix_expt)
+print('Rank of expert correlation matrix = ',Rank.item())
+
+Rank = torch.matrix_rank(correlation_matrix_vwmkr)
+print('Rank of viewmaker correlation matrix = ',Rank.item())
+
+_,s_corr_expert,_ = torch.svd(correlation_matrix_expt, some=False)
+_,s_corr_viewmaker,_ = torch.svd(correlation_matrix_vwmkr, some=False)
+
+
+plt.plot(torch.log(s_corr_expert.cpu()), "r-")
+plt.plot(torch.log(s_corr_viewmaker.cpu()), "b-")
 plt.savefig('log.png')
 plt.show()
