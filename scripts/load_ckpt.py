@@ -9,8 +9,8 @@ from dotmap import DotMap
 from src.systems.eval_image_systems import TransferEvalExpertSystem
 from src.utils.utils import load_json
 
-viewmaker_ckpt_path = "../experiments/experiments/pretrain_viewmaker_cifar_simclr_resnet18/checkpoints"
-expert_ckpt_path = "../experiments/experiments/pretrain_expert_cifar_simclr_resnet18/checkpoints"
+viewmaker_ckpt_path = "experiments/experiments/pretrain_viewmaker_cifar_simclr_resnet18/checkpoints"
+expert_ckpt_path = "experiments/experiments/pretrain_expert_cifar_simclr_resnet18/checkpoints"
 
 def ckpt_name(epoch):
     checkpoint_name = "epoch=" + str(epoch) + ".ckpt"
@@ -19,9 +19,9 @@ def ckpt_name(epoch):
 
 def get_encoder_system(mode, model_path, device, epoch_num):
     if mode == 'viewmaker':
-        config_file = '../experiments/experiments/pretrain_viewmaker_cifar_simclr_resnet18/config.json'
+        config_file = 'experiments/experiments/pretrain_viewmaker_cifar_simclr_resnet18/config.json'
     elif mode == 'expert':
-        config_file = '../experiments/experiments/pretrain_expert_cifar_simclr_resnet18/config.json'
+        config_file = 'experiments/experiments/pretrain_expert_cifar_simclr_resnet18/config.json'
     
     config_json = load_json(config_file)
 
