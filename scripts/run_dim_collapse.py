@@ -56,10 +56,17 @@ _,s_expert,_ = torch.svd(output_embed_matrix_expt, some=False)
 _,s_viewmaker,_ = torch.svd(output_embed_matrix_vwmkr, some=False)
 
 
+plt.figure(dpi=1200)
 plt.plot(torch.log(s_expert.cpu()), "r-")
 plt.plot(torch.log(s_viewmaker.cpu()), "b-")
+plt.legend(["expert", "viewmaker"], loc ="upper right")
+# plt.axis([-2, 128, -12, 2])
+plt.xlabel('Singular Value Rank Index')
+plt.ylabel('Log of Singular Values')
+
 plt.savefig('log.png')
 plt.show()
+
 
 ############################################################################
 # Rank & Singular Values of Cross-Correlation Matrices of Embedding Matrices
@@ -87,7 +94,14 @@ _,s_corr_expert,_ = torch.svd(correlation_matrix_expt, some=False)
 _,s_corr_viewmaker,_ = torch.svd(correlation_matrix_vwmkr, some=False)
 
 
+plt.figure(dpi=1200)
 plt.plot(torch.log(s_corr_expert.cpu()), "r-")
 plt.plot(torch.log(s_corr_viewmaker.cpu()), "b-")
+plt.legend(["expert", "viewmaker"], loc ="upper right")
+# plt.axis([-2, 128, -12, 2])
+plt.xlabel('Singular Value Rank Index')
+plt.ylabel('Log of Singular Values')
+
 plt.savefig('log.png')
 plt.show()
+
